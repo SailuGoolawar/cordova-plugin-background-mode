@@ -122,7 +122,11 @@ public class ForegroundService extends Service {
         boolean isSilent = settings.optBoolean("silent", false);
 
         if (!isSilent) {
-            startForeground(NOTIFICATION_ID, makeNotification());
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+                startForeground(NOTIFICATION_ID, makeNotification(), 1073741824);
+            } else {
+                startForeground(NOTIFICATION_ID, makeNotification());
+            }
         }
 
         PowerManager pm = (PowerManager) getSystemService(POWER_SERVICE);
